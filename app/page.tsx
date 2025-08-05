@@ -1,12 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import { motion, useScroll, useTransform, AnimatePresence, useMotionValue } from "framer-motion" // Added useMotionValue
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Bell, BarChart3, Award, Menu, X, ChevronRight, MapPin, Clock, Shield } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { cn } from "@/lib/utils" // Import cn for conditional class names
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
@@ -34,11 +35,6 @@ export default function LandingPage() {
   const headerOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0.9])
   const heroY = useTransform(scrollYProgress, [0, 0.5], [0, -100])
 
-  // For the moving dot micro-interaction
-  const dotProgress = useMotionValue(0)
-  const dotX = useTransform(dotProgress, [0, 1], [0, 100], { clamp: false }) // Example range, will adjust
-  const dotY = useTransform(dotProgress, [0, 1], [0, 100], { clamp: false }) // Example range, will adjust
-
   const navigation = [
     { name: "Home", href: "#" },
     { name: "About", href: "#about" },
@@ -49,35 +45,35 @@ export default function LandingPage() {
 
   const features = [
     {
-      icon: MapPin, // Changed to MapPin for Real-time blood availability
+      icon: MapPin,
       title: "Real-time blood availability",
       description:
         "Hospitals and users can instantly view available blood types and stock levels from nearby blood banks.",
-      bgColor: "bg-red-100",
-      iconColor: "text-red-600",
+      bgColor: "bg-vital-red/10",
+      iconColor: "text-vital-red",
     },
     {
       icon: Bell,
       title: "Smart donor alerts",
       description: "Sends timely notifications to donors when their blood type is urgently needed in their area.",
-      bgColor: "bg-yellow-100",
-      iconColor: "text-yellow-600",
+      bgColor: "bg-lifepoint-gold/10",
+      iconColor: "text-lifepoint-gold",
     },
     {
       icon: BarChart3,
       title: "Predictive demand tracking",
       description:
         "Predicts blood shortages using health data, local trends, and hospital reports, so supply meets demand before emergencies hit.",
-      bgColor: "bg-blue-100",
-      iconColor: "text-blue-600",
+      bgColor: "bg-tech-blue/10",
+      iconColor: "text-tech-blue",
     },
     {
       icon: Award,
       title: "Lifepoints for recurring donations",
       description:
         "Tracks donation history and rewards frequent donors with health screenings, badges, and referral perks.",
-      bgColor: "bg-purple-100",
-      iconColor: "text-purple-600",
+      bgColor: "bg-fresh-mint/10",
+      iconColor: "text-fresh-mint",
     },
   ]
 
@@ -101,38 +97,72 @@ export default function LandingPage() {
     },
   ]
 
-  const steps = [
+  const donorSteps = [
     {
       number: "1",
-      title: "You Register as a Donor",
-      description: "Sign up in seconds. We'll match you to nearby verified blood banks.",
-      image: "/placeholder.svg?height=300&width=400",
+      title: "Sign Up & Get Verified",
+      description: "Register in seconds. We'll match you to nearby verified blood banks and hospitals.",
+      image: "/images/healthcare-worker-female.jpg",
+      alt: "Healthcare worker assisting a donor registration",
     },
     {
       number: "2",
-      title: "Hospitals & Banks Update Stock",
-      description: "Real-time inventory updates ensure accurate availability information.",
-      image: "/placeholder.svg?height=300&width=400",
+      title: "Donate Blood",
+      description: "Receive timely alerts when your blood type is needed. Donate at a convenient location.",
+      image: "/images/blood-donation.jpg",
+      alt: "Blood donation process",
     },
     {
       number: "3",
-      title: "We Connect You Instantly",
-      description: "The system recommends where your blood is most needed based on demand and location.",
-      image: "/placeholder.svg?height=300&width=400",
+      title: "Earn LifePoints & Redeem",
+      description: "Track your donation history, earn LifePoints, and redeem them for health screenings or perks.",
+      image: "/images/heart-hands-cupping.jpg",
+      alt: "Hands holding a heart, symbolizing care and reward",
+    },
+  ]
+
+  const hospitalSteps = [
+    {
+      number: "1",
+      title: "Log In & Search",
+      description: "Access real-time blood inventory. Search for specific blood types and quantities needed.",
+      image: "/images/doctor-consultation.jpg",
+      alt: "Doctors consulting, symbolizing hospital operations",
+    },
+    {
+      number: "2",
+      title: "Choose Delivery Option",
+      description: "Select standard or emergency delivery based on urgency. Our system optimizes dispatch.",
+      image: "/images/mockup-clean.png",
+      alt: "Mobile app showing delivery options",
+    },
+    {
+      number: "3",
+      title: "Blood Delivered by Certified Riders",
+      description: "Ensure safe and timely delivery of blood units by our network of certified logistics partners.",
+      image: "/images/blood-donation.jpg",
+      alt: "Certified rider delivering blood",
     },
   ]
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-clean-white font-inter">
       {/* Header */}
       <motion.header
-        className="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b border-gray-100 z-50"
+        className="fixed top-0 w-full bg-clean-white/95 backdrop-blur-sm border-b border-deep-charcoal/10 z-50"
         style={{ opacity: headerOpacity }}
       >
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <motion.div className="flex items-center space-x-2" whileHover={{ scale: 1.05 }}>
-              <Image src="/images/logo.png" alt="BloodChain AI" width={200} height={40} className="h-8 w-auto" />
+            <motion.div className="flex items-center space-x-1" whileHover={{ scale: 1.05 }}>
+              <Image
+                src="/images/bloodchain 002.png"
+                alt="BloodChain Logo"
+                width={48}
+                height={48}
+                className="h-12 w-auto"
+              />
+              <span className="text-vital-red text-xl font-montserrat font-bold">BloodChain</span>
             </motion.div>
 
             {/* Desktop Navigation */}
@@ -141,7 +171,7 @@ export default function LandingPage() {
                 <motion.a
                   key={item.name}
                   href={item.href}
-                  className="text-gray-600 hover:text-red-600 transition-colors"
+                  className="text-deep-charcoal/80 hover:text-vital-red transition-colors font-inter"
                   whileHover={{ y: -2 }}
                 >
                   {item.name}
@@ -151,11 +181,11 @@ export default function LandingPage() {
 
             <div className="flex items-center space-x-4">
               <motion.div {...scaleOnHover}>
-                <Button className="bg-red-600 hover:bg-red-700 text-white px-6">Sign Up</Button>
+                <Button className="bg-vital-red hover:bg-vital-red/90 text-clean-white px-6 font-inter">Sign Up</Button>
               </motion.div>
 
               {/* Mobile Menu Button */}
-              <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              <button className="md:hidden text-deep-charcoal" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                 {isMenuOpen ? <X /> : <Menu />}
               </button>
             </div>
@@ -169,14 +199,14 @@ export default function LandingPage() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-white border-t border-gray-100"
+              className="md:hidden bg-clean-white border-t border-deep-charcoal/10"
             >
               <div className="container mx-auto px-4 py-4">
                 {navigation.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
-                    className="block py-2 text-gray-600 hover:text-red-600"
+                    className="block py-2 text-deep-charcoal/80 hover:text-vital-red font-inter"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
@@ -189,7 +219,7 @@ export default function LandingPage() {
       </motion.header>
 
       {/* Hero Section */}
-      <section className="pt-24 pb-16 bg-gradient-to-br from-red-50 to-white overflow-hidden">
+      <section className="pt-24 pb-16 bg-gradient-to-br from-vital-red/5 to-clean-white overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -200,40 +230,50 @@ export default function LandingPage() {
               variants={staggerContainer}
             >
               <motion.div variants={fadeInUp}>
-                <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                  Donate Blood. Save Lives. <span className="text-red-600">Instantly.</span>
+                <h1 className="text-5xl lg:text-6xl font-montserrat font-bold leading-tight bg-gradient-to-r from-vital-red to-deep-charcoal bg-clip-text text-transparent">
+                  Connecting Lives With Every Drop
                 </h1>
               </motion.div>
 
-              <motion.p className="text-xl text-gray-600 leading-relaxed" variants={fadeInUp}>
+              <motion.p className="text-xl text-deep-charcoal/80 leading-relaxed font-inter" variants={fadeInUp}>
                 BloodChain connects blood donors, hospitals, and banks - fast, smart, and in real-time.
               </motion.p>
 
               <motion.div className="flex flex-col sm:flex-row gap-4" variants={fadeInUp}>
                 <motion.div {...scaleOnHover}>
-                  <Button size="lg" className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 text-lg">
+                  <Button
+                    size="lg"
+                    className="bg-vital-red hover:bg-vital-red/90 text-clean-white px-8 py-4 text-lg font-inter"
+                  >
                     Become A Donor
                     <ChevronRight className="ml-2 h-5 w-5" />
                   </Button>
                 </motion.div>
                 <motion.div {...scaleOnHover}>
-                  <Button size="lg" variant="outline" className="border-gray-300 px-8 py-4 text-lg bg-transparent">
-                    Join The Waitlist
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-vital-red text-vital-red hover:bg-vital-red/10 px-8 py-4 text-lg font-inter bg-transparent"
+                  >
+                    Sign Up as Hospital
                   </Button>
                 </motion.div>
               </motion.div>
 
-              <motion.div className="flex items-center space-x-6 text-sm text-gray-500" variants={fadeInUp}>
+              <motion.div
+                className="flex items-center space-x-6 text-sm text-deep-charcoal/60 font-inter"
+                variants={fadeInUp}
+              >
                 <div className="flex items-center space-x-2">
-                  <Shield className="h-4 w-4" />
+                  <Shield className="h-4 w-4 text-tech-blue" />
                   <span>Verified & Secure</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Clock className="h-4 w-4" />
+                  <Clock className="h-4 w-4 text-tech-blue" />
                   <span>Real-time Matching</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <MapPin className="h-4 w-4" />
+                  <MapPin className="h-4 w-4 text-tech-blue" />
                   <span>Nationwide Coverage</span>
                 </div>
               </motion.div>
@@ -247,37 +287,29 @@ export default function LandingPage() {
             >
               <div className="relative z-10">
                 <Image
-                  src="/images/mockup.png" // Using the original mockup with lines
-                  alt="BloodChain AI Mobile App"
+                  src="/images/mockup.png"
+                  alt="BloodChain Mobile App"
                   width={600}
                   height={600}
                   className="w-full max-w-md mx-auto"
                 />
               </div>
 
-              {/* Animated background circles */}
+              {/* Animated background circles with moving dot */}
               <motion.div
                 className="absolute inset-0 -z-10"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
               >
-                <div className="absolute inset-0 border-2 border-red-100 rounded-full"></div>
-                <div className="absolute inset-4 border-2 border-red-200 rounded-full"></div>
-                <div className="absolute inset-8 border-2 border-red-300 rounded-full"></div>
+                <div className="absolute inset-0 border-2 border-vital-red/10 rounded-full"></div>
+                <div className="absolute inset-4 border-2 border-vital-red/20 rounded-full"></div>
+                <div className="absolute inset-8 border-2 border-vital-red/30 rounded-full"></div>
                 {/* Moving dot micro-interaction */}
                 <motion.div
-                  className="absolute w-3 h-3 bg-red-600 rounded-full"
+                  className="absolute w-3 h-3 bg-vital-red rounded-full"
                   style={{
-                    x: useTransform(dotProgress, [0, 1], [0, 100], { clamp: false }), // Will be calculated based on circle path
-                    y: useTransform(dotProgress, [0, 1], [0, 100], { clamp: false }), // Will be calculated based on circle path
-                  }}
-                  animate={{ dotProgress: 1 }}
-                  transition={{
-                    dotProgress: {
-                      duration: 5,
-                      repeat: Number.POSITIVE_INFINITY,
-                      ease: "linear",
-                    },
+                    top: "calc(50% - 224px - 6px)", // Half of image height - radius of outermost circle - half dot size
+                    left: "calc(50% - 6px)", // Half of image width - half dot size
                   }}
                 />
               </motion.div>
@@ -286,8 +318,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section id="how-it-works" className="py-20 bg-white">
+      {/* How BloodChain Works for Donors Section */}
+      <section id="how-it-works-donors" className="py-20 bg-clean-white">
         <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             className="text-center mb-16"
@@ -296,10 +328,16 @@ export default function LandingPage() {
             viewport={{ once: true }}
             variants={fadeInUp}
           >
-            <h2 className="text-4xl font-bold text-red-600 mb-4">How BloodChain AI Works</h2>
-            <p className="text-lg text-gray-600">
-              BloodChainAI connects blood donors from hospitals, and banks fast, smart, and in real time.
+            <h2 className="text-4xl font-montserrat font-bold text-vital-red mb-4">How BloodChain Works for Donors</h2>
+            <p className="text-lg text-deep-charcoal/80 font-inter">
+              Become a life-saver. Here's how you can make a difference.
             </p>
+            <motion.div
+              className="inline-flex items-center px-4 py-2 mt-4 bg-tech-blue/10 text-tech-blue rounded-full text-sm font-inter"
+              variants={fadeInUp}
+            >
+              <span className="mr-2">✨</span> Smart matching & dispatch powered by AI
+            </motion.div>
           </motion.div>
 
           {/* Desktop Layout: 2 columns */}
@@ -312,17 +350,17 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="bg-white border border-gray-200 rounded-2xl p-8 flex gap-6"
+                className="bg-clean-white border border-deep-charcoal/20 rounded-2xl p-8 flex gap-6"
               >
                 <div className="flex-1">
-                  <div className="text-sm text-gray-500 mb-2">Step 1</div>
-                  <h3 className="text-2xl font-bold text-gray-800 mb-4">You Register as a Donor</h3>
-                  <p className="text-gray-600">Sign up in seconds. We'll match you to nearby verified blood banks.</p>
+                  <div className="text-sm text-deep-charcoal/60 mb-2 font-inter">Step 1</div>
+                  <h3 className="text-2xl font-montserrat font-bold text-deep-charcoal mb-4">{donorSteps[0].title}</h3>
+                  <p className="text-deep-charcoal/80 font-inter">{donorSteps[0].description}</p>
                 </div>
                 <div className="w-48 h-32 rounded-lg overflow-hidden flex-shrink-0">
                   <Image
-                    src="/images/healthcare-worker-female.jpg"
-                    alt="Healthcare worker"
+                    src={donorSteps[0].image || "/placeholder.svg"}
+                    alt={donorSteps[0].alt}
                     width={200}
                     height={130}
                     className="w-full h-full object-cover"
@@ -336,20 +374,17 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="bg-white border border-gray-200 rounded-2xl p-8 flex gap-6"
+                className="bg-clean-white border border-deep-charcoal/20 rounded-2xl p-8 flex gap-6"
               >
                 <div className="flex-1">
-                  <div className="text-sm text-gray-500 mb-2">Step 2</div>
-                  <h3 className="text-2xl font-bold text-gray-800 mb-4">Hospitals & Banks Update Stock</h3>
-                  <p className="text-gray-600">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum
-                    tristique.
-                  </p>
+                  <div className="text-sm text-deep-charcoal/60 mb-2 font-inter">Step 2</div>
+                  <h3 className="text-2xl font-montserrat font-bold text-deep-charcoal mb-4">{donorSteps[1].title}</h3>
+                  <p className="text-deep-charcoal/80 font-inter">{donorSteps[1].description}</p>
                 </div>
                 <div className="w-48 h-32 rounded-lg overflow-hidden flex-shrink-0">
                   <Image
-                    src="/images/heart-hands-cupping.jpg"
-                    alt="Hands holding heart"
+                    src={donorSteps[1].image || "/placeholder.svg"}
+                    alt={donorSteps[1].alt}
                     width={120}
                     height={80}
                     className="w-full h-full object-cover rounded-lg"
@@ -365,19 +400,17 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="bg-white border border-gray-200 rounded-2xl p-8 h-full flex flex-col"
+                className="bg-clean-white border border-deep-charcoal/20 rounded-2xl p-8 h-full flex flex-col"
               >
                 <div className="mb-8">
-                  <div className="text-sm text-gray-500 mb-2">Step 3</div>
-                  <h3 className="text-2xl font-bold text-gray-800 mb-4">We Connect You Instantly</h3>
-                  <p className="text-gray-600">
-                    The system recommends where your blood is most needed based on demand and location.
-                  </p>
+                  <div className="text-sm text-deep-charcoal/60 mb-2 font-inter">Step 3</div>
+                  <h3 className="text-2xl font-montserrat font-bold text-deep-charcoal mb-4">{donorSteps[2].title}</h3>
+                  <p className="text-deep-charcoal/80 font-inter">{donorSteps[2].description}</p>
                 </div>
                 <div className="flex-1 rounded-lg overflow-hidden">
                   <Image
-                    src="/images/doctor-consultation.jpg"
-                    alt="Doctors in consultation"
+                    src={donorSteps[2].image || "/placeholder.svg"}
+                    alt={donorSteps[2].alt}
                     width={600}
                     height={400}
                     className="w-full h-full object-cover"
@@ -389,84 +422,174 @@ export default function LandingPage() {
 
           {/* Mobile Layout: Stacked vertically */}
           <div className="md:hidden space-y-6">
-            {/* Step 1 Mobile */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="bg-white border border-gray-200 rounded-2xl p-6"
-            >
-              <div className="text-sm text-gray-500 mb-2">Step 1</div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">You Register as a Donor</h3>
-              <p className="text-gray-600 mb-4 text-sm">
-                Sign up in seconds. We'll match you to nearby verified blood banks.
-              </p>
-              <div className="aspect-video rounded-lg overflow-hidden">
-                <Image
-                  src="/images/healthcare-worker-female.jpg"
-                  alt="Healthcare worker"
-                  width={300}
-                  height={180}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </motion.div>
+            {donorSteps.map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="bg-clean-white border border-deep-charcoal/20 rounded-2xl p-6"
+              >
+                <div className="text-sm text-deep-charcoal/60 mb-2 font-inter">Step {step.number}</div>
+                <h3 className="text-xl font-montserrat font-bold text-deep-charcoal mb-3">{step.title}</h3>
+                <p className="text-deep-charcoal/80 mb-4 text-sm font-inter">{step.description}</p>
+                <div className="aspect-video rounded-lg overflow-hidden">
+                  <Image
+                    src={step.image || "/placeholder.svg"}
+                    alt={step.alt}
+                    width={300}
+                    height={180}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            {/* Step 2 Mobile */}
+      {/* How BloodChain Works for Hospitals Section */}
+      <section id="how-it-works-hospitals" className="py-20 bg-warm-sand">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <motion.div
+            className="text-center mb-16"
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+          >
+            <h2 className="text-4xl font-montserrat font-bold text-deep-charcoal mb-4">
+              How BloodChain Works for Hospitals
+            </h2>
+            <p className="text-lg text-deep-charcoal/80 font-inter">
+              Streamline your blood supply management and save critical time.
+            </p>
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-white border border-gray-200 rounded-2xl p-6"
+              className="inline-flex items-center px-4 py-2 mt-4 bg-tech-blue/10 text-tech-blue rounded-full text-sm font-inter"
+              variants={fadeInUp}
             >
-              <div className="text-sm text-gray-500 mb-2">Step 2</div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Hospitals & Banks Update Stock</h3>
-              <p className="text-gray-600 mb-4 text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum
-                tristique.
-              </p>
-              <div className="aspect-video rounded-lg overflow-hidden">
-                <Image
-                  src="/images/heart-hands-cupping.jpg"
-                  alt="Hands holding heart"
-                  width={200}
-                  height={120}
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              </div>
+              <span className="mr-2">✨</span> Smart matching & dispatch powered by AI
             </motion.div>
+          </motion.div>
 
-            {/* Step 3 Mobile */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="bg-white border border-gray-200 rounded-2xl p-6"
-            >
-              <div className="text-sm text-gray-500 mb-2">Step 3</div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">We Connect You Instantly</h3>
-              <p className="text-gray-600 mb-4 text-sm">
-                The system recommends where your blood is most needed based on demand and location.
-              </p>
-              <div className="aspect-video rounded-lg overflow-hidden">
-                <Image
-                  src="/images/doctor-consultation.jpg"
-                  alt="Doctors in consultation"
-                  width={300}
-                  height={180}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </motion.div>
+          {/* Desktop Layout: 2 columns */}
+          <div className="hidden md:grid md:grid-cols-2 gap-8">
+            {/* Left Column: Step 1 and Step 2 */}
+            <div className="space-y-8">
+              {/* Step 1 */}
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="bg-clean-white border border-deep-charcoal/20 rounded-2xl p-8 flex gap-6"
+              >
+                <div className="flex-1">
+                  <div className="text-sm text-deep-charcoal/60 mb-2 font-inter">Step 1</div>
+                  <h3 className="text-2xl font-montserrat font-bold text-deep-charcoal mb-4">
+                    {hospitalSteps[0].title}
+                  </h3>
+                  <p className="text-deep-charcoal/80 font-inter">{hospitalSteps[0].description}</p>
+                </div>
+                <div className="w-48 h-32 rounded-lg overflow-hidden flex-shrink-0">
+                  <Image
+                    src={hospitalSteps[0].image || "/placeholder.svg"}
+                    alt={hospitalSteps[0].alt}
+                    width={200}
+                    height={130}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </motion.div>
+
+              {/* Step 2 */}
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="bg-clean-white border border-deep-charcoal/20 rounded-2xl p-8 flex gap-6"
+              >
+                <div className="flex-1">
+                  <div className="text-sm text-deep-charcoal/60 mb-2 font-inter">Step 2</div>
+                  <h3 className="text-2xl font-montserrat font-bold text-deep-charcoal mb-4">
+                    {hospitalSteps[1].title}
+                  </h3>
+                  <p className="text-deep-charcoal/80 font-inter">{hospitalSteps[1].description}</p>
+                </div>
+                <div className="w-48 h-32 rounded-lg overflow-hidden flex-shrink-0">
+                  <Image
+                    src={hospitalSteps[1].image || "/placeholder.svg"}
+                    alt={hospitalSteps[1].alt}
+                    width={120}
+                    height={80}
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Right Column: Step 3 */}
+            <div>
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="bg-clean-white border border-deep-charcoal/20 rounded-2xl p-8 h-full flex flex-col"
+              >
+                <div className="mb-8">
+                  <div className="text-sm text-deep-charcoal/60 mb-2 font-inter">Step 3</div>
+                  <h3 className="text-2xl font-montserrat font-bold text-deep-charcoal mb-4">
+                    {hospitalSteps[2].title}
+                  </h3>
+                  <p className="text-deep-charcoal/80 font-inter">{hospitalSteps[2].description}</p>
+                </div>
+                <div className="flex-1 rounded-lg overflow-hidden">
+                  <Image
+                    src={hospitalSteps[2].image || "/placeholder.svg"}
+                    alt={hospitalSteps[2].alt}
+                    width={600}
+                    height={400}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Mobile Layout: Stacked vertically */}
+          <div className="md:hidden space-y-6">
+            {hospitalSteps.map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="bg-clean-white border border-deep-charcoal/20 rounded-2xl p-6"
+              >
+                <div className="text-sm text-deep-charcoal/60 mb-2 font-inter">Step {step.number}</div>
+                <h3 className="text-xl font-montserrat font-bold text-deep-charcoal mb-3">{step.title}</h3>
+                <p className="text-deep-charcoal/80 mb-4 text-sm font-inter">{step.description}</p>
+                <div className="aspect-video rounded-lg overflow-hidden">
+                  <Image
+                    src={step.image || "/placeholder.svg"}
+                    alt={step.alt}
+                    width={300}
+                    height={180}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Crisis Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-clean-white">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <motion.div
@@ -475,9 +598,9 @@ export default function LandingPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-4xl font-bold text-red-600 mb-8">The Blood Crisis in Nigeria</h2>
+              <h2 className="text-4xl font-montserrat font-bold text-vital-red mb-8">The Blood Crisis in Nigeria</h2>
 
-              <div className="space-y-6 text-gray-700 text-base leading-relaxed">
+              <div className="space-y-6 text-deep-charcoal text-base leading-relaxed font-inter">
                 <p>
                   Every year, Nigeria needs over <strong>1.8 million pints</strong> of blood, yet less than{" "}
                   <strong>10%</strong> comes from voluntary donors. This severe shortage puts thousands of lives at
@@ -490,7 +613,7 @@ export default function LandingPage() {
                   access, connection, and timely response.
                 </p>
 
-                <p className="font-semibold">That's where BloodChain AI comes in.</p>
+                <p className="font-semibold">That's where BloodChain comes in.</p>
               </div>
             </motion.div>
 
@@ -516,7 +639,7 @@ export default function LandingPage() {
       </section>
 
       {/* Mission Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-warm-sand">
         <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             className="text-center mb-16"
@@ -525,12 +648,12 @@ export default function LandingPage() {
             viewport={{ once: true }}
             variants={fadeInUp}
           >
-            <h2 className="text-4xl font-bold text-red-600 mb-6">Our Mission</h2>
-            <div className="max-w-4xl mx-auto space-y-4 text-gray-700 text-base leading-relaxed">
+            <h2 className="text-4xl font-montserrat font-bold text-vital-red mb-6">Our Mission</h2>
+            <div className="max-w-4xl mx-auto space-y-4 text-deep-charcoal text-base leading-relaxed font-inter">
               <p>We're building a smart, connected blood donation ecosystem — powered by AI and driven by community.</p>
               <p>
-                BloodChain AI connects verified donors, blood banks, and hospitals in real time, ensuring that safe
-                blood is available exactly when and where it's needed.
+                BloodChain connects verified donors, blood banks, and hospitals in real time, ensuring that safe blood
+                is available exactly when and where it's needed.
               </p>
             </div>
           </motion.div>
@@ -551,12 +674,15 @@ export default function LandingPage() {
                     className="text-center"
                   >
                     <div
-                      className={`w-16 h-16 ${feature.bgColor} rounded-full flex items-center justify-center mx-auto mb-4`}
+                      className={cn(
+                        "w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4",
+                        feature.bgColor,
+                      )}
                     >
-                      <Icon className={`h-8 w-8 ${feature.iconColor}`} />
+                      <Icon className={cn("h-8 w-8", feature.iconColor)} />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">{feature.title}</h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">{feature.description}</p>
+                    <h3 className="text-xl font-montserrat font-bold text-deep-charcoal mb-4">{feature.title}</h3>
+                    <p className="text-deep-charcoal/80 text-sm leading-relaxed font-inter">{feature.description}</p>
                   </motion.div>
                 )
               })}
@@ -570,7 +696,7 @@ export default function LandingPage() {
               transition={{ duration: 0.8 }}
               className="flex justify-center"
             >
-              <div className="w-80 h-80 bg-red-600 rounded-2xl overflow-hidden">
+              <div className="w-80 h-80 bg-vital-red rounded-2xl overflow-hidden">
                 <Image
                   src="/images/heart-hands-holding.jpg"
                   alt="Hands holding heart"
@@ -587,7 +713,7 @@ export default function LandingPage() {
                 const Icon = feature.icon
                 return (
                   <motion.div
-                    key={index + 2} // Adjust key for uniqueness
+                    key={index + 2}
                     initial={{ opacity: 0, x: 50 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -595,15 +721,15 @@ export default function LandingPage() {
                     className="text-center"
                   >
                     <div
-                      className={`w-16 h-16 ${feature.bgColor} rounded-full flex items-center justify-center mx-auto mb-4`}
+                      className={cn(
+                        "w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4",
+                        feature.bgColor,
+                      )}
                     >
-                      <Icon className={`h-8 w-8 ${feature.iconColor}`} />
+                      <Icon className={cn("h-8 w-8", feature.iconColor)} />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">{feature.title}</h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">{feature.description}</p>
-                    {feature.title === "Smart donor alerts" && (
-                      <p className="text-xs text-gray-500 mt-2">Icon Suggestion</p>
-                    )}
+                    <h3 className="text-xl font-montserrat font-bold text-deep-charcoal mb-4">{feature.title}</h3>
+                    <p className="text-deep-charcoal/80 text-sm leading-relaxed font-inter">{feature.description}</p>
                   </motion.div>
                 )
               })}
@@ -621,15 +747,18 @@ export default function LandingPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-white border border-gray-200 rounded-2xl p-6 text-center"
+                  className="bg-clean-white border border-deep-charcoal/20 rounded-2xl p-6 text-center"
                 >
                   <div
-                    className={`w-16 h-16 ${feature.bgColor} rounded-full flex items-center justify-center mx-auto mb-4`}
+                    className={cn(
+                      "w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4",
+                      feature.bgColor,
+                    )}
                   >
-                    <Icon className={`h-8 w-8 ${feature.iconColor}`} />
+                    <Icon className={cn("h-8 w-8", feature.iconColor)} />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{feature.description}</p>
+                  <h3 className="text-xl font-montserrat font-bold text-deep-charcoal mb-3">{feature.title}</h3>
+                  <p className="text-deep-charcoal/80 text-sm leading-relaxed font-inter">{feature.description}</p>
                 </motion.div>
               )
             })}
@@ -640,7 +769,7 @@ export default function LandingPage() {
               transition={{ duration: 0.8, delay: features.length * 0.1 }}
               className="flex justify-center pt-4"
             >
-              <div className="w-64 h-64 bg-red-600 rounded-2xl overflow-hidden">
+              <div className="w-64 h-64 bg-vital-red rounded-2xl overflow-hidden">
                 <Image
                   src="/images/heart-hands-holding.jpg"
                   alt="Hands holding heart"
@@ -655,7 +784,7 @@ export default function LandingPage() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-clean-white">
         <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-16"
@@ -664,7 +793,7 @@ export default function LandingPage() {
             viewport={{ once: true }}
             variants={fadeInUp}
           >
-            <h2 className="text-4xl font-bold text-gray-700 mb-4">What People Are Saying</h2>
+            <h2 className="text-4xl font-montserrat font-bold text-deep-charcoal mb-4">What People Are Saying</h2>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -676,10 +805,12 @@ export default function LandingPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 whileHover={{ y: -5 }}
-                className="bg-white border border-gray-200 rounded-2xl p-8 hover:shadow-lg transition-all"
+                className="bg-clean-white border border-deep-charcoal/20 rounded-2xl p-8 hover:shadow-lg transition-all"
               >
-                <blockquote className="text-gray-700 mb-6 text-base leading-relaxed">"{testimonial.quote}"</blockquote>
-                <cite className="text-gray-600 font-medium not-italic">{testimonial.author}</cite>
+                <blockquote className="text-deep-charcoal/80 mb-6 text-base leading-relaxed font-inter">
+                  "{testimonial.quote}"
+                </blockquote>
+                <cite className="text-deep-charcoal/60 font-inter font-medium not-italic">{testimonial.author}</cite>
               </motion.div>
             ))}
           </div>
@@ -687,7 +818,7 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20" style={{ backgroundColor: "#8B4B47" }}>
+      <section className="py-20 bg-vital-red">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial="initial"
@@ -696,11 +827,14 @@ export default function LandingPage() {
             variants={staggerContainer}
             className="max-w-4xl mx-auto"
           >
-            <motion.h2 className="text-4xl lg:text-5xl font-bold mb-6 text-white" variants={fadeInUp}>
+            <motion.h2
+              className="text-4xl lg:text-5xl font-montserrat font-bold mb-6 text-clean-white"
+              variants={fadeInUp}
+            >
               Ready to Save Lives? Let's Start.
             </motion.h2>
 
-            <motion.p className="text-xl mb-8 text-white/90" variants={fadeInUp}>
+            <motion.p className="text-xl mb-8 text-clean-white/90 font-inter" variants={fadeInUp}>
               Sign up now to become a blood hero in your community. Whether you're a donor, a hospital, or a blood bank
               we need you.
             </motion.p>
@@ -711,16 +845,19 @@ export default function LandingPage() {
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-transparent border-2 border-white/30 text-white placeholder:text-white/60 flex-1 h-12"
+                className="bg-transparent border-2 border-clean-white/30 text-clean-white placeholder:text-clean-white/60 flex-1 h-12 font-inter"
               />
               <motion.div {...scaleOnHover}>
-                <Button size="lg" className="bg-white text-gray-900 hover:bg-gray-100 px-8 h-12 font-semibold">
+                <Button
+                  size="lg"
+                  className="bg-clean-white text-deep-charcoal hover:bg-gray-100 px-8 h-12 font-semibold font-inter"
+                >
                   Register As a Donor
                 </Button>
               </motion.div>
             </motion.div>
 
-            <motion.p className="text-sm text-white/75" variants={fadeInUp}>
+            <motion.p className="text-sm text-clean-white/75 font-inter" variants={fadeInUp}>
               By clicking Sign Up you're confirming that you agree with our{" "}
               <span className="underline">Terms and Conditions</span>.
             </motion.p>
@@ -729,29 +866,36 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 py-8">
+      <footer className="bg-clean-white border-t border-deep-charcoal/20 py-8">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between">
             {/* Logo */}
-            <div className="mb-4 md:mb-0">
-              <Image src="/images/logo.png" alt="BloodChain AI" width={200} height={40} className="h-8 w-auto" />
+            <div className="mb-4 md:mb-0 flex items-center space-x-1">
+              <Image
+                src="/images/bloodchain 002.png"
+                alt="BloodChain Logo"
+                width={48}
+                height={48}
+                className="h-12 w-auto"
+              />
+              <span className="text-vital-red text-xl font-montserrat font-bold">BloodChain</span>
             </div>
 
             {/* Navigation Links */}
             <nav className="flex flex-wrap justify-center md:justify-start gap-x-8 gap-y-2 mb-4 md:mb-0">
-              <Link href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
+              <Link href="#" className="text-deep-charcoal/80 hover:text-deep-charcoal transition-colors font-inter">
                 Home
               </Link>
-              <Link href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
+              <Link href="#" className="text-deep-charcoal/80 hover:text-deep-charcoal transition-colors font-inter">
                 About us
               </Link>
-              <Link href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
+              <Link href="#" className="text-deep-charcoal/80 hover:text-deep-charcoal transition-colors font-inter">
                 Contact us
               </Link>
-              <Link href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
+              <Link href="#" className="text-deep-charcoal/80 hover:text-deep-charcoal transition-colors font-inter">
                 How it works
               </Link>
-              <Link href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
+              <Link href="#" className="text-deep-charcoal/80 hover:text-deep-charcoal transition-colors font-inter">
                 Help Center
               </Link>
             </nav>
@@ -760,7 +904,7 @@ export default function LandingPage() {
             <div className="flex items-center space-x-4">
               <motion.a
                 href="#"
-                className="text-gray-600 hover:text-gray-900 transition-colors"
+                className="text-deep-charcoal/60 hover:text-deep-charcoal transition-colors"
                 whileHover={{ scale: 1.1 }}
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -769,7 +913,7 @@ export default function LandingPage() {
               </motion.a>
               <motion.a
                 href="#"
-                className="text-gray-600 hover:text-gray-900 transition-colors"
+                className="text-deep-charcoal/60 hover:text-deep-charcoal transition-colors"
                 whileHover={{ scale: 1.1 }}
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -778,7 +922,7 @@ export default function LandingPage() {
               </motion.a>
               <motion.a
                 href="#"
-                className="text-gray-600 hover:text-gray-900 transition-colors"
+                className="text-deep-charcoal/60 hover:text-deep-charcoal transition-colors"
                 whileHover={{ scale: 1.1 }}
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -787,7 +931,7 @@ export default function LandingPage() {
               </motion.a>
               <motion.a
                 href="#"
-                className="text-gray-600 hover:text-gray-900 transition-colors"
+                className="text-deep-charcoal/60 hover:text-deep-charcoal transition-colors"
                 whileHover={{ scale: 1.1 }}
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -796,7 +940,7 @@ export default function LandingPage() {
               </motion.a>
               <motion.a
                 href="#"
-                className="text-gray-600 hover:text-gray-900 transition-colors"
+                className="text-deep-charcoal/60 hover:text-deep-charcoal transition-colors"
                 whileHover={{ scale: 1.1 }}
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -807,16 +951,16 @@ export default function LandingPage() {
           </div>
 
           {/* Bottom Copyright */}
-          <div className="border-t border-gray-200 mt-8 pt-8 text-center">
-            <p className="text-gray-600 text-sm">
-              © 2025 BloodChain AI. All rights reserved.{" "}
-              <Link href="#" className="hover:text-gray-900">
+          <div className="border-t border-deep-charcoal/20 mt-8 pt-8 text-center">
+            <p className="text-deep-charcoal/80 text-sm font-inter">
+              © 2025 BloodChain. All rights reserved.{" "}
+              <Link href="#" className="hover:text-deep-charcoal">
                 Privacy Policy
               </Link>{" "}
-              <Link href="#" className="hover:text-gray-900">
+              <Link href="#" className="hover:text-deep-charcoal">
                 Terms of Service
               </Link>{" "}
-              <Link href="#" className="hover:text-gray-900">
+              <Link href="#" className="hover:text-deep-charcoal">
                 Cookies Settings
               </Link>
             </p>
