@@ -13,7 +13,7 @@ Nigeria requires over **1.8 million pints of blood annually**, yet less than **1
 **BloodChain AI** addresses this critical challenge by connecting **donors**, **blood banks**, and **hospitals** in real-time through a predictive, intelligent system.
 
 The landing page showcases:
-- The **problem** we’re solving  
+- The **problem** we’re solving
 - Our **AI-powered solution**  
 - **Key features** and incentives  
 - **Calls to action** for community participation  
@@ -32,7 +32,7 @@ The landing page showcases:
 
 ## 📁 Project Structure
 
-```
+
 bloodchain-landing/
 ├── public/               # Static files (images, icons, logos)
 ├── src/

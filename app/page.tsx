@@ -350,21 +350,23 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="bg-clean-white border border-deep-charcoal/20 rounded-2xl p-8 flex gap-6"
+                className="bg-clean-white border border-deep-charcoal/20 rounded-2xl pl-8 flex gap-6"
               >
-                <div className="flex-1">
+                <div className="pt-[123px] pb-[123px] pl-1.5 pr-1.5 flex-1">
                   <div className="text-sm text-deep-charcoal/60 mb-2 font-inter">Step 1</div>
                   <h3 className="text-2xl font-montserrat font-bold text-deep-charcoal mb-4">{donorSteps[0].title}</h3>
                   <p className="text-deep-charcoal/80 font-inter">{donorSteps[0].description}</p>
                 </div>
-                <div className="w-48 h-32 rounded-lg overflow-hidden flex-shrink-0">
-                  <Image
-                    src={donorSteps[0].image || "/placeholder.svg"}
-                    alt={donorSteps[0].alt}
-                    width={200}
-                    height={130}
-                    className="w-full h-full object-cover"
-                  />
+                <div className="flex items-stretch">
+                  <div className="aspect-[4/3] h-full roudd-lg overflow-hidden flex-shrink-0">
+                    <Image
+                      src={donorSteps[0].image || "/placeholder.svg"}
+                      alt={donorSteps[0].alt}
+                      width={320}
+                      height={368}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 </div>
               </motion.div>
 
@@ -385,8 +387,8 @@ export default function LandingPage() {
                   <Image
                     src={donorSteps[1].image || "/placeholder.svg"}
                     alt={donorSteps[1].alt}
-                    width={120}
-                    height={80}
+                    width={320}
+                    height={368}
                     className="w-full h-full object-cover rounded-lg"
                   />
                 </div>
